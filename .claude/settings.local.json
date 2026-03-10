@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd \"C:\\\\Users\\\\victor.besson\\\\OneDrive - GLENAT EDITIONS\\\\Bureau\\\\secret\\\\hiro\" && npx next build 2>&1 | tail -40)"
+      "Bash(cd \"C:\\\\Users\\\\victor.besson\\\\OneDrive - GLENAT EDITIONS\\\\Bureau\\\\secret\\\\hiro\" && npx next build 2>&1 | tail -40)",
+      "Bash(npm install)"
     ]
   }
 }
