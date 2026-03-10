@@ -1,0 +1,36 @@
+{
+  "name": "hiro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0",
+    "@mendable/firecrawl-js": "^1.5.0",
+    "@prisma/client": "^6.0.0",
+    "next": "15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "date-fns": "^4.0.0",
+    "lucide-react": "^0.400.0",
+    "recharts": "^2.12.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.0",
+    "prisma": "^6.0.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5"
+  }
+}

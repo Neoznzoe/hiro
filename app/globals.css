@@ -1,0 +1,280 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   HIRO DESIGN TOKENS
+   Référence palette complète → tailwind.config.ts
+   Utiliser ces vars CSS dans les composants pour le theming
+────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Brand raw ────────────────────────────────────────── */
+  --woodsmoke-700:   #09090d;
+  --woodsmoke-600:   #191920;
+  --woodsmoke-500:   #3e3e4b;
+  --woodsmoke-400:   #535363;
+  --woodsmoke-300:   #82828f;
+  --woodsmoke-200:   #9c9ca7;
+  --woodsmoke-100:   #dadade;
+  --woodsmoke-50:    #f0f0f2;
+
+  --athens-gray-700: #0f0f22;
+  --athens-gray-600: #1b1b36;
+  --athens-gray-500: #4c4c83;
+  --athens-gray-400: #68689c;
+  --athens-gray-300: #a0a0c3;
+  --athens-gray-200: #babad3;
+  --athens-gray-100: #e7e7ef;
+  --athens-gray-50:  #eeeef4;
+
+  --alabaster-50:    #fafafa;
+  --alabaster-100:   #f3f3f3;
+  --alabaster-200:   #c5c5c5;
+  --alabaster-300:   #aaaaaa;
+
+  --blue-ribbon-700: #040642;
+  --blue-ribbon-600: #080c5e;
+  --blue-ribbon-500: #1e26c8;
+  --blue-ribbon-400: #343bea;
+  --blue-ribbon-300: #6366f1;
+  --blue-ribbon-200: #8789f5;
+  --blue-ribbon-100: #d5d5fb;
+  --blue-ribbon-50:  #eff0fe;
+
+  --link-water-100:  #e0e0f0;
+  --link-water-50:   #f0f0f8;
+
+  --tall-poppy-400:  #c0392b;
+  --tall-poppy-300:  #f1665c;
+  --tall-poppy-200:  #f38d87;
+  --tall-poppy-100:  #f9d6d4;
+  --tall-poppy-50:   #fceded;
+
+  --zest-300:        #d97706;
+  --zest-200:        #fb8a08;
+  --zest-100:        #ffd5c3;
+  --zest-50:         #ffede6;
+
+  --chateau-green-300: #16a34a;
+  --chateau-green-200: #1bbe57;
+  --chateau-green-100: #28fd77;
+  --chateau-green-50:  #c5ffd0;
+
+  /* ── Semantic UI tokens (light mode) ─────────────────── */
+  --bg:              var(--alabaster-50);
+  --bg-subtle:       var(--alabaster-100);
+  --bg-muted:        var(--athens-gray-50);
+  --bg-card:         var(--alabaster-50);
+  --bg-inverse:      var(--woodsmoke-700);
+
+  --border:          var(--athens-gray-100);
+  --border-strong:   var(--athens-gray-200);
+
+  --text:            var(--woodsmoke-700);
+  --text-muted:      var(--woodsmoke-400);
+  --text-subtle:     var(--woodsmoke-300);
+  --text-inverse:    var(--link-water-100);
+
+  --accent:          var(--blue-ribbon-300);
+  --accent-hover:    var(--blue-ribbon-400);
+  --accent-subtle:   var(--blue-ribbon-50);
+  --accent-muted:    var(--blue-ribbon-100);
+
+  /* ── Statuts candidatures ─────────────────────────────── */
+  --status-to-apply-bg:    var(--blue-ribbon-50);
+  --status-to-apply-text:  var(--blue-ribbon-500);
+  --status-applied-bg:     var(--zest-50);
+  --status-applied-text:   var(--zest-300);
+  --status-followup-bg:    var(--zest-100);
+  --status-followup-text:  var(--zest-200);
+  --status-interview-bg:   var(--chateau-green-50);
+  --status-interview-text: var(--chateau-green-300);
+  --status-offer-bg:       var(--chateau-green-100);
+  --status-offer-text:     var(--chateau-green-300);
+  --status-rejected-bg:    var(--tall-poppy-50);
+  --status-rejected-text:  var(--tall-poppy-400);
+  --status-archived-bg:    var(--alabaster-100);
+  --status-archived-text:  var(--alabaster-300);
+
+  /* ── Urgence relance ──────────────────────────────────── */
+  --urgency-overdue: var(--tall-poppy-400);
+  --urgency-today:   var(--zest-200);
+  --urgency-soon:    var(--zest-300);
+  --urgency-ok:      var(--chateau-green-300);
+
+  /* ── Red flags ────────────────────────────────────────── */
+  --redflag-high-bg:   var(--tall-poppy-50);
+  --redflag-high-text: var(--tall-poppy-400);
+  --redflag-med-bg:    var(--zest-50);
+  --redflag-med-text:  var(--zest-300);
+  --redflag-low-bg:    var(--blue-ribbon-50);
+  --redflag-low-text:  var(--blue-ribbon-400);
+}
+
+/* ── Dark mode overrides ──────────────────────────────────── */
+.dark {
+  --bg:          var(--woodsmoke-700);
+  --bg-subtle:   #111118;
+  --bg-muted:    #1a1a24;
+  --bg-card:     #13131a;
+  --bg-inverse:  var(--athens-gray-50);
+
+  --border:        #2a2a38;
+  --border-strong: #3a3a50;
+
+  --text:         var(--link-water-100);
+  --text-muted:   var(--woodsmoke-200);
+  --text-subtle:  var(--woodsmoke-300);
+  --text-inverse: var(--woodsmoke-700);
+
+  --accent:        var(--blue-ribbon-300);
+  --accent-hover:  var(--blue-ribbon-200);
+  --accent-subtle: #0d0f30;
+  --accent-muted:  var(--blue-ribbon-600);
+
+  --status-to-apply-bg:    #0d0f30;
+  --status-applied-bg:     #1f1200;
+  --status-followup-bg:    #2a1800;
+  --status-interview-bg:   #011505;
+  --status-offer-bg:       #01240b;
+  --status-rejected-bg:    #270503;
+  --status-archived-bg:    var(--woodsmoke-600);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE
+────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HIRO COMPONENT CLASSES
+────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Surfaces ───────────────────────────────────────────── */
+  .hiro-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    @apply rounded-xl shadow-hiro-sm;
+  }
+  .hiro-card-hover {
+    @apply hiro-card transition-shadow duration-150;
+  }
+  .hiro-card-hover:hover {
+    border-color: var(--border-strong);
+    @apply shadow-hiro-md;
+  }
+
+  /* ── Boutons ─────────────────────────────────────────────── */
+  .hiro-btn-primary {
+    background-color: var(--accent);
+    color: white;
+    @apply font-semibold px-4 py-2 rounded-lg text-sm transition-colors duration-150;
+  }
+  .hiro-btn-primary:hover { background-color: var(--accent-hover); }
+
+  .hiro-btn-secondary {
+    background-color: var(--bg-muted);
+    color: var(--text);
+    border: 1px solid var(--border);
+    @apply font-medium px-4 py-2 rounded-lg text-sm transition-colors duration-150;
+  }
+  .hiro-btn-secondary:hover {
+    background-color: var(--accent-subtle);
+    border-color: var(--accent-muted);
+  }
+
+  .hiro-btn-ghost {
+    color: var(--accent);
+    @apply font-medium px-3 py-1.5 rounded-lg text-sm transition-colors duration-150;
+  }
+  .hiro-btn-ghost:hover { background-color: var(--accent-subtle); }
+
+  .hiro-btn-danger {
+    background-color: var(--tall-poppy-50);
+    color: var(--tall-poppy-400);
+    border: 1px solid var(--tall-poppy-100);
+    @apply font-medium px-4 py-2 rounded-lg text-sm transition-colors duration-150;
+  }
+
+  /* ── Input ───────────────────────────────────────────────── */
+  .hiro-input {
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border);
+    color: var(--text);
+    @apply w-full px-3 py-2 rounded-lg text-sm outline-none transition-all duration-150;
+  }
+  .hiro-input::placeholder { color: var(--text-subtle); }
+  .hiro-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+
+  /* ── Badges ──────────────────────────────────────────────── */
+  .hiro-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  /* Statuts */
+  .status-to-apply  { @apply hiro-badge; background: var(--status-to-apply-bg);   color: var(--status-to-apply-text); }
+  .status-applied   { @apply hiro-badge; background: var(--status-applied-bg);    color: var(--status-applied-text); }
+  .status-followup  { @apply hiro-badge; background: var(--status-followup-bg);   color: var(--status-followup-text); }
+  .status-interview { @apply hiro-badge; background: var(--status-interview-bg);  color: var(--status-interview-text); }
+  .status-offer     { @apply hiro-badge; background: var(--status-offer-bg);      color: var(--status-offer-text); }
+  .status-rejected  { @apply hiro-badge; background: var(--status-rejected-bg);   color: var(--status-rejected-text); }
+  .status-archived  { @apply hiro-badge; background: var(--status-archived-bg);   color: var(--status-archived-text); }
+
+  /* Red flags */
+  .redflag-high { @apply hiro-badge; background: var(--redflag-high-bg); color: var(--redflag-high-text); }
+  .redflag-med  { @apply hiro-badge; background: var(--redflag-med-bg);  color: var(--redflag-med-text); }
+  .redflag-low  { @apply hiro-badge; background: var(--redflag-low-bg);  color: var(--redflag-low-text); }
+
+  /* ── Urgency indicator ───────────────────────────────────── */
+  .urgency-dot {
+    @apply inline-block w-2 h-2 rounded-full flex-shrink-0;
+  }
+  .urgency-overdue { color: var(--urgency-overdue); }
+  .urgency-overdue .urgency-dot { background-color: var(--urgency-overdue); }
+  .urgency-today   { color: var(--urgency-today); }
+  .urgency-today   .urgency-dot { background-color: var(--urgency-today); }
+  .urgency-soon    { color: var(--urgency-soon); }
+  .urgency-soon    .urgency-dot { background-color: var(--urgency-soon); }
+  .urgency-ok      { color: var(--urgency-ok); }
+  .urgency-ok      .urgency-dot { background-color: var(--urgency-ok); }
+
+  /* ── Score bar ───────────────────────────────────────────── */
+  .score-bar-track {
+    background-color: var(--border);
+    @apply h-1.5 w-full rounded-full overflow-hidden;
+  }
+  .score-bar-fill {
+    background-color: var(--accent);
+    @apply h-full rounded-full transition-all duration-500;
+  }
+  /* Score couleur selon valeur — à appliquer via JS */
+  .score-bar-fill[data-score="low"]  { background-color: var(--urgency-overdue); }
+  .score-bar-fill[data-score="mid"]  { background-color: var(--urgency-soon); }
+  .score-bar-fill[data-score="high"] { background-color: var(--chateau-green-300); }
+
+  /* ── Divider ─────────────────────────────────────────────── */
+  .hiro-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    @apply my-4;
+  }
+
+  /* ── Empty state ─────────────────────────────────────────── */
+  .hiro-empty {
+    color: var(--text-subtle);
+    @apply flex flex-col items-center justify-center py-12 text-sm text-center;
+  }
+}

@@ -1,0 +1,75 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ApplicationSource {
+  indeed
+  linkedin
+  wttj
+  spontaneous
+  other
+}
+
+enum ApplicationStatus {
+  to_apply
+  applied
+  followup
+  interview
+  offer
+  rejected
+  archived
+}
+
+enum EventType {
+  status_change
+  note_added
+  followup_sent
+  interview_scheduled
+  offer_received
+}
+
+model Application {
+  id                 String            @id @default(uuid())
+  companyName        String
+  position           String
+  source             ApplicationSource
+  offerUrl           String?
+  status             ApplicationStatus @default(to_apply)
+  appliedAt          DateTime?
+  nextFollowupAt     DateTime?
+  followupDelayDays  Int               @default(10)
+  contactName        String?
+  contactEmail       String?
+  salaryRange        String?
+  notes              String?
+  analysisData       Json?             // Résultat complet de l'analyse Claude
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  events             ApplicationEvent[]
+}
+
+model ApplicationEvent {
+  id             String      @id @default(uuid())
+  applicationId  String
+  eventType      EventType
+  payload        Json?
+  createdAt      DateTime    @default(now())
+
+  application    Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model UserProfile {
+  id          String   @id @default(uuid())
+  cvRaw       String?  // Contenu parsé du CV
+  cvFilename  String?
+  preferences Json?    // { sectors: [], contractTypes: [], location: "" }
+  updatedAt   DateTime @updatedAt
+}
