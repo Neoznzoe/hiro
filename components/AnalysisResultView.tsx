@@ -4,7 +4,7 @@ import type { AnalysisResult } from '@/types'
 import { ScoreBar, ScoreBig } from './ScoreBar'
 import {
   Target, Building2, MessageSquare, FileText, TrendingUp,
-  AlertTriangle, ChevronDown, Star, Shield, Eye
+  AlertTriangle, ChevronDown, Star, Shield, Eye, Zap, Sparkles
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -12,7 +12,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { cn } from '@/lib/utils'
 
 export function AnalysisResultView({ analysis }: { analysis: AnalysisResult }) {
-  const { offer, company, interview, cv, score } = analysis
+  const { offer, company, interview, cv, score, analysisMode } = analysis
+
+  const modeConfig = analysisMode === 'quick'
+    ? { label: 'Analyse rapide', icon: Zap, className: 'bg-zest-50 text-zest-300' }
+    : { label: 'Analyse approfondie', icon: Sparkles, className: 'bg-blue-ribbon-50 text-blue-ribbon-500' }
 
   const recColor = score.recommendation === 'apply'
     ? 'bg-chateau-green-50 text-chateau-green-300 hover:bg-chateau-green-50'
@@ -26,14 +30,20 @@ export function AnalysisResultView({ analysis }: { analysis: AnalysisResult }) {
       ? 'Postuler avec prudence'
       : 'Passer'
 
+  const ModeIcon = modeConfig.icon
+
   return (
     <Accordion type="multiple" defaultValue={['score', 'offer']} className="space-y-2">
       {/* Score global */}
       <AccordionItem value="score" className="border rounded-lg bg-card px-4">
         <AccordionTrigger className="hover:no-underline py-4">
-          <div className="flex items-center gap-2.5 font-semibold text-sm">
+          <div className="flex items-center gap-2.5 font-semibold text-sm flex-1">
             <Target className="h-4 w-4" />
             Score global
+            <Badge className={cn('ml-auto mr-2 font-medium', modeConfig.className)}>
+              <ModeIcon className="h-3 w-3 mr-1" />
+              {modeConfig.label}
+            </Badge>
           </div>
         </AccordionTrigger>
         <AccordionContent className="pb-4">

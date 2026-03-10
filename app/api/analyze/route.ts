@@ -4,10 +4,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { scrapeOffer, scrapeCompany, extractCompanyUrl } from '@/lib/scraper'
 import { analyzeOffer } from '@/lib/claude/analyze'
 import { db } from '@/lib/db'
+import type { AnalysisMode } from '@/types'
 
 export async function POST(req: NextRequest) {
   try {
-    const { url, rawText } = await req.json()
+    const { url, rawText, mode = 'deep' } = await req.json() as {
+      url?: string
+      rawText?: string
+      mode?: AnalysisMode
+    }
 
     if (!url && !rawText) {
       return NextResponse.json({ error: 'URL ou texte requis' }, { status: 400 })
@@ -18,7 +23,7 @@ export async function POST(req: NextRequest) {
     if (rawText) {
       offerContent = rawText
     } else {
-      offerContent = await scrapeOffer(url)
+      offerContent = await scrapeOffer(url!)
     }
 
     // 2. Scraping de la boîte (best effort)
@@ -31,8 +36,8 @@ export async function POST(req: NextRequest) {
     const profile = await db.userProfile.findFirst()
     const userCv = profile?.cvRaw || undefined
 
-    // 4. Analyse Claude
-    const analysis = await analyzeOffer(offerContent, companyContent, userCv)
+    // 4. Analyse Claude (avec le mode choisi)
+    const analysis = await analyzeOffer(offerContent, companyContent, mode, userCv)
 
     return NextResponse.json({ analysis, offerContent })
 

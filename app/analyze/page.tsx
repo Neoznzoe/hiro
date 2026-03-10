@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, Loader2, Plus, AlertCircle, CheckCircle2, Circle } from 'lucide-react'
+import { Search, Loader2, Plus, AlertCircle, CheckCircle2, Circle, Zap, Sparkles } from 'lucide-react'
 import { AnalysisResultView } from '@/components/AnalysisResultView'
-import type { AnalysisResult } from '@/types'
+import type { AnalysisResult, AnalysisMode } from '@/types'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
 
 const STEPS = [
   'Scraping de l\'offre...',
@@ -23,6 +24,7 @@ export default function AnalyzePage() {
   const router = useRouter()
   const [url, setUrl] = useState('')
   const [rawText, setRawText] = useState('')
+  const [mode, setMode] = useState<AnalysisMode>('deep')
   const [loading, setLoading] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
   const [result, setResult] = useState<{ analysis: AnalysisResult; offerContent: string } | null>(null)
@@ -50,7 +52,7 @@ export default function AnalyzePage() {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url || undefined, rawText: rawText || undefined }),
+        body: JSON.stringify({ url: url || undefined, rawText: rawText || undefined, mode }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Erreur serveur')
@@ -129,6 +131,57 @@ export default function AnalyzePage() {
                 onChange={e => setRawText(e.target.value)}
                 disabled={loading}
               />
+            </div>
+
+            {/* Mode toggle */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Type d'analyse</label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setMode('quick')}
+                  disabled={loading}
+                  className={cn(
+                    'flex items-center gap-3 p-4 rounded-lg border-2 transition-all text-left',
+                    mode === 'quick'
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-muted-foreground/30'
+                  )}
+                >
+                  <div className={cn(
+                    'p-2 rounded-lg',
+                    mode === 'quick' ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
+                  )}>
+                    <Zap className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground">Rapide</div>
+                    <div className="text-xs text-muted-foreground">Haiku · ~0.003€</div>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode('deep')}
+                  disabled={loading}
+                  className={cn(
+                    'flex items-center gap-3 p-4 rounded-lg border-2 transition-all text-left',
+                    mode === 'deep'
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-muted-foreground/30'
+                  )}
+                >
+                  <div className={cn(
+                    'p-2 rounded-lg',
+                    mode === 'deep' ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
+                  )}>
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground">Approfondie</div>
+                    <div className="text-xs text-muted-foreground">Sonnet · ~0.04€</div>
+                  </div>
+                </button>
+              </div>
             </div>
 
             <Button

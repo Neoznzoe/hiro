@@ -2,13 +2,20 @@
 // Orchestration de l'analyse complète via Claude API
 
 import Anthropic from '@anthropic-ai/sdk'
-import type { AnalysisResult } from '@/types'
+import type { AnalysisResult, AnalysisMode } from '@/types'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+// Modèles selon le mode d'analyse
+const MODELS: Record<AnalysisMode, string> = {
+  quick: 'claude-3-haiku-20240307',
+  deep: 'claude-sonnet-4-20250514',
+}
 
 export async function analyzeOffer(
   offerContent: string,
   companyContent: string,
+  mode: AnalysisMode = 'deep',
   userCv?: string
 ): Promise<AnalysisResult> {
   const systemPrompt = `Tu es un expert en recrutement et stratégie de carrière, spécialisé dans le marché français du travail.
@@ -18,7 +25,7 @@ Réponds UNIQUEMENT en JSON valide, sans markdown, sans backticks, sans texte av
   const userPrompt = buildAnalysisPrompt(offerContent, companyContent, userCv)
 
   const response = await anthropic.messages.create({
-    model: 'claude-opus-4-5',
+    model: MODELS[mode],
     max_tokens: 4096,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }]
@@ -27,7 +34,8 @@ Réponds UNIQUEMENT en JSON valide, sans markdown, sans backticks, sans texte av
   const text = response.content[0].type === 'text' ? response.content[0].text : ''
 
   try {
-    return JSON.parse(text) as AnalysisResult
+    const parsed = JSON.parse(text)
+    return { ...parsed, analysisMode: mode } as AnalysisResult
   } catch {
     throw new Error(`Impossible de parser la réponse Claude: ${text.slice(0, 200)}`)
   }
@@ -167,7 +175,7 @@ Génère un email de relance professionnel, bref (3-4 phrases max), naturel, pas
 Réponds UNIQUEMENT en JSON : { "subject": "...", "body": "..." }`
 
   const response = await anthropic.messages.create({
-    model: 'claude-opus-4-5',
+    model: 'claude-3-haiku-20240307',
     max_tokens: 500,
     messages: [{ role: 'user', content: prompt }]
   })

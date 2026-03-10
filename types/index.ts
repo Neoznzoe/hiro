@@ -24,12 +24,15 @@ export interface Application {
 
 // ─── Résultat complet de l'analyse Claude ────────────────────────────────────
 
+export type AnalysisMode = 'quick' | 'deep'
+
 export interface AnalysisResult {
   offer: OfferAnalysis
   company: CompanyAnalysis
   interview: InterviewIntel
   cv: CVAdaptation
   score: GlobalScore
+  analysisMode: AnalysisMode
 }
 
 export interface OfferAnalysis {
