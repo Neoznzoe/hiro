@@ -3,11 +3,14 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, Search, Briefcase } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { HiroWordmark } from './HiroLogo'
 
 const NAV_ITEMS = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/analyze', label: 'Analyser une offre', icon: Search },
+  { href: '/analyze', label: 'Analyser', icon: Search },
   { href: '/applications', label: 'Candidatures', icon: Briefcase },
 ]
 
@@ -15,27 +18,33 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-woodsmoke-700 border-r border-woodsmoke-600 flex flex-col z-50">
+    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-sidebar border-r border-sidebar-border flex flex-col z-50">
       <div className="p-6">
         <HiroWordmark variant="transparent-light" size={28} />
       </div>
 
-      <nav className="flex-1 px-3 space-y-1">
+      <Separator className="bg-sidebar-border mx-3" />
+
+      <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href)
           return (
-            <Link
+            <Button
               key={href}
-              href={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              variant="ghost"
+              asChild
+              className={cn(
+                'w-full justify-start gap-3 h-10 px-3 font-medium',
                 isActive
-                  ? 'bg-woodsmoke-600 text-blue-ribbon-400'
-                  : 'text-athens-gray-200 hover:bg-woodsmoke-600 hover:text-athens-gray-50'
-              }`}
+                  ? 'bg-sidebar-accent text-sidebar-primary'
+                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+              )}
             >
-              <Icon size={18} />
-              {label}
-            </Link>
+              <Link href={href}>
+                <Icon className="h-4 w-4" />
+                {label}
+              </Link>
+            </Button>
           )
         })}
       </nav>

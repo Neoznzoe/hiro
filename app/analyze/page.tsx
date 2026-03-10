@@ -2,9 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, Loader2, Plus, AlertCircle } from 'lucide-react'
+import { Search, Loader2, Plus, AlertCircle, CheckCircle2, Circle } from 'lucide-react'
 import { AnalysisResultView } from '@/components/AnalysisResultView'
 import type { AnalysisResult } from '@/types'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Separator } from '@/components/ui/separator'
 
 const STEPS = [
   'Scraping de l\'offre...',
@@ -61,7 +66,6 @@ export default function AnalyzePage() {
     if (!result) return
     setSaving(true)
 
-    // Détecte la source depuis l'URL
     let source = 'other'
     if (url) {
       if (url.includes('indeed')) source = 'indeed'
@@ -94,72 +98,90 @@ export default function AnalyzePage() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold">Analyser une offre</h1>
+      <h1 className="text-2xl font-bold text-foreground">Analyser une offre</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <input
-            type="url"
-            className="hiro-input"
-            placeholder="Colle l'URL de l'offre..."
-            value={url}
-            onChange={e => setUrl(e.target.value)}
-            disabled={loading}
-          />
-        </div>
+      <Card>
+        <CardContent className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">URL de l'offre</label>
+              <Input
+                type="url"
+                placeholder="https://www.linkedin.com/jobs/view/..."
+                value={url}
+                onChange={e => setUrl(e.target.value)}
+                disabled={loading}
+              />
+            </div>
 
-        <div className="flex items-center gap-3">
-          <hr className="hiro-divider flex-1" />
-          <span className="text-xs text-[var(--text-subtle)]">ou</span>
-          <hr className="hiro-divider flex-1" />
-        </div>
+            <div className="flex items-center gap-3">
+              <Separator className="flex-1" />
+              <span className="text-xs text-muted-foreground">ou</span>
+              <Separator className="flex-1" />
+            </div>
 
-        <div>
-          <textarea
-            className="hiro-input min-h-[120px] resize-y"
-            placeholder="...ou colle le texte de l'offre directement"
-            value={rawText}
-            onChange={e => setRawText(e.target.value)}
-            disabled={loading}
-          />
-        </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Texte de l'offre</label>
+              <Textarea
+                className="min-h-[120px] resize-y"
+                placeholder="Colle le texte de l'offre directement ici..."
+                value={rawText}
+                onChange={e => setRawText(e.target.value)}
+                disabled={loading}
+              />
+            </div>
 
-        <button
-          type="submit"
-          disabled={loading || (!url && !rawText)}
-          className="hiro-btn-primary flex items-center gap-2 disabled:opacity-50"
-        >
-          {loading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />}
-          {loading ? 'Analyse en cours...' : 'Lancer l\'analyse'}
-        </button>
-      </form>
+            <Button
+              type="submit"
+              disabled={loading || (!url && !rawText)}
+              className="w-full"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Analyse en cours...
+                </>
+              ) : (
+                <>
+                  <Search className="h-4 w-4 mr-2" />
+                  Lancer l'analyse
+                </>
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
 
       {/* Loading steps */}
       {loading && (
-        <div className="hiro-card p-6">
-          <div className="space-y-3">
-            {STEPS.map((step, i) => (
-              <div key={step} className={`flex items-center gap-3 text-sm transition-opacity ${i <= stepIndex ? 'opacity-100' : 'opacity-30'}`}>
-                {i < stepIndex ? (
-                  <span className="w-5 h-5 rounded-full bg-chateau-green-300 flex items-center justify-center text-white text-xs">&#10003;</span>
-                ) : i === stepIndex ? (
-                  <Loader2 size={18} className="animate-spin text-[var(--accent)]" />
-                ) : (
-                  <span className="w-5 h-5 rounded-full border border-[var(--border)]" />
-                )}
-                {step}
-              </div>
-            ))}
-          </div>
-        </div>
+        <Card>
+          <CardContent className="p-6">
+            <div className="space-y-3">
+              {STEPS.map((step, i) => (
+                <div key={step} className={`flex items-center gap-3 text-sm transition-opacity ${i <= stepIndex ? 'opacity-100' : 'opacity-30'}`}>
+                  {i < stepIndex ? (
+                    <CheckCircle2 className="h-5 w-5 text-chateau-green-300" />
+                  ) : i === stepIndex ? (
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                  ) : (
+                    <Circle className="h-5 w-5 text-muted-foreground" />
+                  )}
+                  <span className="text-foreground">{step}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Error */}
       {error && (
-        <div className="hiro-card p-4 border-[var(--tall-poppy-300)] flex items-center gap-3">
-          <AlertCircle size={18} className="text-tall-poppy-400 flex-shrink-0" />
-          <p className="text-sm text-tall-poppy-300">{error}</p>
-        </div>
+        <Card className="border-destructive">
+          <CardContent className="flex items-center gap-3 p-4">
+            <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0" />
+            <p className="text-sm text-destructive">{error}</p>
+          </CardContent>
+        </Card>
       )}
 
       {/* Results */}
@@ -167,14 +189,24 @@ export default function AnalyzePage() {
         <div className="space-y-4">
           <AnalysisResultView analysis={result.analysis} />
 
-          <button
+          <Button
             onClick={handleSave}
             disabled={saving}
-            className="hiro-btn-primary flex items-center gap-2 w-full justify-center py-3"
+            className="w-full py-6"
+            size="lg"
           >
-            {saving ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-            {saving ? 'Sauvegarde...' : 'Ajouter à mes candidatures'}
-          </button>
+            {saving ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Sauvegarde...
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4 mr-2" />
+                Ajouter à mes candidatures
+              </>
+            )}
+          </Button>
         </div>
       )}
     </div>

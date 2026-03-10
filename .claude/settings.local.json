@@ -3,7 +3,10 @@
     "allow": [
       "Bash(cd \"C:\\\\Users\\\\victor.besson\\\\OneDrive - GLENAT EDITIONS\\\\Bureau\\\\secret\\\\hiro\" && npx next build 2>&1 | tail -40)",
       "Bash(npm install)",
-      "Bash(pnpm install)"
+      "Bash(pnpm install)",
+      "Bash(npx shadcn@latest init -y)",
+      "Bash(pnpm add:*)",
+      "Bash(npx shadcn@latest add:*)"
     ]
   }
 }
