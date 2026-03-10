@@ -28,3 +28,7 @@ Thumbs.db
 
 # turbo
 .turbo/
+
+# typescript
+tsconfig.tsbuildinfo
+*.tsbuildinfo

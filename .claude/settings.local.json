@@ -6,7 +6,8 @@
       "Bash(pnpm install)",
       "Bash(npx shadcn@latest init -y)",
       "Bash(pnpm add:*)",
-      "Bash(npx shadcn@latest add:*)"
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(git rm:*)"
     ]
   }
 }
