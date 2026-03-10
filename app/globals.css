@@ -1,282 +1,209 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    /* ─── shadcn/ui variables mapped to Hiro colors ─────────── */
-    --background: 0 0% 98%;          /* alabaster-50 #fafafa */
-    --foreground: 240 19% 4%;        /* woodsmoke-700 #09090d */
+@plugin "tailwindcss-animate";
 
-    --card: 0 0% 98%;                /* alabaster-50 */
-    --card-foreground: 240 19% 4%;   /* woodsmoke-700 */
+@custom-variant dark (&:is(.dark *));
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 240 19% 4%;
+@theme {
+  /* Hiro brand colors - these become utility classes like bg-woodsmoke-700 */
+  --color-woodsmoke-50: #f0f0f2;
+  --color-woodsmoke-100: #dadade;
+  --color-woodsmoke-200: #9c9ca7;
+  --color-woodsmoke-300: #82828f;
+  --color-woodsmoke-400: #535363;
+  --color-woodsmoke-500: #3e3e4b;
+  --color-woodsmoke-600: #191920;
+  --color-woodsmoke-700: #09090d;
 
-    --primary: 239 84% 67%;          /* blue-ribbon-300 #6366f1 */
-    --primary-foreground: 0 0% 100%;
+  --color-athens-gray-50: #eeeef4;
+  --color-athens-gray-100: #e7e7ef;
+  --color-athens-gray-200: #babad3;
+  --color-athens-gray-300: #a0a0c3;
+  --color-athens-gray-400: #68689c;
+  --color-athens-gray-500: #4c4c83;
+  --color-athens-gray-600: #1b1b36;
+  --color-athens-gray-700: #0f0f22;
 
-    --secondary: 240 4% 93%;         /* athens-gray-50 #eeeef4 */
-    --secondary-foreground: 240 19% 4%;
+  --color-alabaster-50: #fafafa;
+  --color-alabaster-100: #f3f3f3;
+  --color-alabaster-200: #c5c5c5;
+  --color-alabaster-300: #aaaaaa;
 
-    --muted: 240 4% 93%;             /* athens-gray-50 */
-    --muted-foreground: 240 4% 36%;  /* woodsmoke-400 #535363 */
+  --color-blue-ribbon-50: #eff0fe;
+  --color-blue-ribbon-100: #d5d5fb;
+  --color-blue-ribbon-200: #8789f5;
+  --color-blue-ribbon-300: #6366f1;
+  --color-blue-ribbon-400: #343bea;
+  --color-blue-ribbon-500: #1e26c8;
+  --color-blue-ribbon-600: #080c5e;
+  --color-blue-ribbon-700: #040642;
 
-    --accent: 240 4% 93%;
-    --accent-foreground: 240 19% 4%;
+  --color-tall-poppy-50: #fceded;
+  --color-tall-poppy-100: #f9d6d4;
+  --color-tall-poppy-200: #f38d87;
+  --color-tall-poppy-300: #f1665c;
+  --color-tall-poppy-400: #c0392b;
 
-    --destructive: 5 71% 46%;        /* tall-poppy-400 #c0392b */
-    --destructive-foreground: 0 0% 100%;
+  --color-zest-50: #ffede6;
+  --color-zest-100: #ffd5c3;
+  --color-zest-200: #fb8a08;
+  --color-zest-300: #d97706;
 
-    --border: 240 7% 92%;            /* athens-gray-100 #e7e7ef */
-    --input: 240 7% 92%;
-    --ring: 239 84% 67%;             /* blue-ribbon-300 */
+  --color-chateau-green-50: #c5ffd0;
+  --color-chateau-green-100: #28fd77;
+  --color-chateau-green-200: #1bbe57;
+  --color-chateau-green-300: #16a34a;
 
-    --radius: 0.75rem;
+  /* shadcn semantic colors */
+  --color-background: var(--color-alabaster-50);
+  --color-foreground: var(--color-woodsmoke-700);
+  --color-card: var(--color-alabaster-50);
+  --color-card-foreground: var(--color-woodsmoke-700);
+  --color-popover: var(--color-alabaster-50);
+  --color-popover-foreground: var(--color-woodsmoke-700);
+  --color-primary: var(--color-blue-ribbon-300);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-athens-gray-50);
+  --color-secondary-foreground: var(--color-woodsmoke-700);
+  --color-muted: var(--color-athens-gray-50);
+  --color-muted-foreground: var(--color-woodsmoke-400);
+  --color-accent: var(--color-athens-gray-50);
+  --color-accent-foreground: var(--color-woodsmoke-700);
+  --color-destructive: var(--color-tall-poppy-400);
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--color-athens-gray-100);
+  --color-input: var(--color-athens-gray-100);
+  --color-ring: var(--color-blue-ribbon-300);
 
-    /* Chart colors */
-    --chart-1: 239 84% 67%;
-    --chart-2: 37 92% 44%;
-    --chart-3: 142 71% 37%;
-    --chart-4: 5 71% 46%;
-    --chart-5: 240 4% 46%;
+  /* Sidebar colors */
+  --color-sidebar: var(--color-woodsmoke-700);
+  --color-sidebar-foreground: var(--color-athens-gray-200);
+  --color-sidebar-primary: var(--color-blue-ribbon-300);
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent: var(--color-woodsmoke-600);
+  --color-sidebar-accent-foreground: var(--color-athens-gray-50);
+  --color-sidebar-border: var(--color-woodsmoke-600);
 
-    /* ─── Hiro Brand raw colors ───────────────────────────── */
-    --woodsmoke-700:   #09090d;
-    --woodsmoke-600:   #191920;
-    --woodsmoke-500:   #3e3e4b;
-    --woodsmoke-400:   #535363;
-    --woodsmoke-300:   #82828f;
-    --woodsmoke-200:   #9c9ca7;
-    --woodsmoke-100:   #dadade;
-    --woodsmoke-50:    #f0f0f2;
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 
-    --athens-gray-700: #0f0f22;
-    --athens-gray-600: #1b1b36;
-    --athens-gray-500: #4c4c83;
-    --athens-gray-400: #68689c;
-    --athens-gray-300: #a0a0c3;
-    --athens-gray-200: #babad3;
-    --athens-gray-100: #e7e7ef;
-    --athens-gray-50:  #eeeef4;
+  /* Font */
+  --font-sans: 'Inter', system-ui, sans-serif;
 
-    --alabaster-50:    #fafafa;
-    --alabaster-100:   #f3f3f3;
-    --alabaster-200:   #c5c5c5;
-    --alabaster-300:   #aaaaaa;
+  /* Shadows */
+  --shadow-hiro-sm: 0 1px 3px 0 rgba(9,9,13,0.08), 0 1px 2px -1px rgba(9,9,13,0.06);
+  --shadow-hiro-md: 0 4px 6px -1px rgba(9,9,13,0.10), 0 2px 4px -2px rgba(9,9,13,0.08);
+  --shadow-hiro-lg: 0 10px 15px -3px rgba(9,9,13,0.12), 0 4px 6px -4px rgba(9,9,13,0.08);
 
-    --blue-ribbon-700: #040642;
-    --blue-ribbon-600: #080c5e;
-    --blue-ribbon-500: #1e26c8;
-    --blue-ribbon-400: #343bea;
-    --blue-ribbon-300: #6366f1;
-    --blue-ribbon-200: #8789f5;
-    --blue-ribbon-100: #d5d5fb;
-    --blue-ribbon-50:  #eff0fe;
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-    --link-water-100:  #e0e0f0;
-    --link-water-50:   #f0f0f8;
-
-    --tall-poppy-400:  #c0392b;
-    --tall-poppy-300:  #f1665c;
-    --tall-poppy-200:  #f38d87;
-    --tall-poppy-100:  #f9d6d4;
-    --tall-poppy-50:   #fceded;
-
-    --zest-300:        #d97706;
-    --zest-200:        #fb8a08;
-    --zest-100:        #ffd5c3;
-    --zest-50:         #ffede6;
-
-    --chateau-green-300: #16a34a;
-    --chateau-green-200: #1bbe57;
-    --chateau-green-100: #28fd77;
-    --chateau-green-50:  #c5ffd0;
-
-    /* ─── Hiro Semantic tokens ────────────────────────────── */
-    --hiro-bg:            var(--alabaster-50);
-    --hiro-bg-subtle:     var(--alabaster-100);
-    --hiro-bg-muted:      var(--athens-gray-50);
-    --hiro-bg-card:       var(--alabaster-50);
-    --hiro-bg-inverse:    var(--woodsmoke-700);
-
-    --hiro-border:        var(--athens-gray-100);
-    --hiro-border-strong: var(--athens-gray-200);
-
-    --hiro-text:          var(--woodsmoke-700);
-    --hiro-text-muted:    var(--woodsmoke-400);
-    --hiro-text-subtle:   var(--woodsmoke-300);
-    --hiro-text-inverse:  var(--link-water-100);
-
-    --hiro-accent:        var(--blue-ribbon-300);
-    --hiro-accent-hover:  var(--blue-ribbon-400);
-    --hiro-accent-subtle: var(--blue-ribbon-50);
-    --hiro-accent-muted:  var(--blue-ribbon-100);
-
-    /* ─── Statuts candidatures ───────────────────────────── */
-    --status-to-apply-bg:    var(--blue-ribbon-50);
-    --status-to-apply-text:  var(--blue-ribbon-500);
-    --status-applied-bg:     var(--zest-50);
-    --status-applied-text:   var(--zest-300);
-    --status-followup-bg:    var(--zest-100);
-    --status-followup-text:  var(--zest-200);
-    --status-interview-bg:   var(--chateau-green-50);
-    --status-interview-text: var(--chateau-green-300);
-    --status-offer-bg:       var(--chateau-green-100);
-    --status-offer-text:     var(--chateau-green-300);
-    --status-rejected-bg:    var(--tall-poppy-50);
-    --status-rejected-text:  var(--tall-poppy-400);
-    --status-archived-bg:    var(--alabaster-100);
-    --status-archived-text:  var(--alabaster-300);
-
-    /* ─── Urgence relance ─────────────────────────────────── */
-    --urgency-overdue: var(--tall-poppy-400);
-    --urgency-today:   var(--zest-200);
-    --urgency-soon:    var(--zest-300);
-    --urgency-ok:      var(--chateau-green-300);
-
-    /* ─── Red flags ───────────────────────────────────────── */
-    --redflag-high-bg:   var(--tall-poppy-50);
-    --redflag-high-text: var(--tall-poppy-400);
-    --redflag-med-bg:    var(--zest-50);
-    --redflag-med-text:  var(--zest-300);
-    --redflag-low-bg:    var(--blue-ribbon-50);
-    --redflag-low-text:  var(--blue-ribbon-400);
-
-    /* Sidebar */
-    --sidebar-background: var(--woodsmoke-700);
-    --sidebar-foreground: var(--athens-gray-200);
-    --sidebar-primary: var(--blue-ribbon-300);
-    --sidebar-primary-foreground: white;
-    --sidebar-accent: var(--woodsmoke-600);
-    --sidebar-accent-foreground: var(--athens-gray-50);
-    --sidebar-border: var(--woodsmoke-600);
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
   }
-
-  .dark {
-    --background: 240 19% 4%;        /* woodsmoke-700 */
-    --foreground: 240 7% 91%;        /* link-water-100 */
-
-    --card: 240 17% 5%;              /* #13131a */
-    --card-foreground: 240 7% 91%;
-
-    --popover: 240 17% 5%;
-    --popover-foreground: 240 7% 91%;
-
-    --primary: 239 84% 67%;          /* blue-ribbon-300 */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 240 15% 10%;        /* #1a1a24 */
-    --secondary-foreground: 240 7% 91%;
-
-    --muted: 240 15% 10%;
-    --muted-foreground: 240 4% 64%;  /* woodsmoke-200 */
-
-    --accent: 240 15% 10%;
-    --accent-foreground: 240 7% 91%;
-
-    --destructive: 5 71% 46%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 15% 18%;           /* #2a2a38 */
-    --input: 240 15% 18%;
-    --ring: 239 84% 67%;
-
-    /* Chart colors dark */
-    --chart-1: 239 84% 67%;
-    --chart-2: 37 92% 54%;
-    --chart-3: 142 71% 45%;
-    --chart-4: 5 71% 55%;
-    --chart-5: 240 4% 55%;
-
-    /* ─── Hiro Dark Semantic tokens ───────────────────────── */
-    --hiro-bg:            var(--woodsmoke-700);
-    --hiro-bg-subtle:     #111118;
-    --hiro-bg-muted:      #1a1a24;
-    --hiro-bg-card:       #13131a;
-    --hiro-bg-inverse:    var(--athens-gray-50);
-
-    --hiro-border:        #2a2a38;
-    --hiro-border-strong: #3a3a50;
-
-    --hiro-text:          var(--link-water-100);
-    --hiro-text-muted:    var(--woodsmoke-200);
-    --hiro-text-subtle:   var(--woodsmoke-300);
-    --hiro-text-inverse:  var(--woodsmoke-700);
-
-    --hiro-accent:        var(--blue-ribbon-300);
-    --hiro-accent-hover:  var(--blue-ribbon-200);
-    --hiro-accent-subtle: #0d0f30;
-    --hiro-accent-muted:  var(--blue-ribbon-600);
-
-    --status-to-apply-bg:    #0d0f30;
-    --status-applied-bg:     #1f1200;
-    --status-followup-bg:    #2a1800;
-    --status-interview-bg:   #011505;
-    --status-offer-bg:       #01240b;
-    --status-rejected-bg:    #270503;
-    --status-archived-bg:    var(--woodsmoke-600);
-
-    --sidebar-background: var(--woodsmoke-700);
-    --sidebar-foreground: var(--athens-gray-200);
-    --sidebar-primary: var(--blue-ribbon-300);
-    --sidebar-primary-foreground: white;
-    --sidebar-accent: var(--woodsmoke-600);
-    --sidebar-accent-foreground: var(--athens-gray-50);
-    --sidebar-border: var(--woodsmoke-600);
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
+/* CSS variables for compatibility */
+:root {
+  --radius: 0.75rem;
+
+  /* Status colors */
+  --status-to-apply-bg: var(--color-blue-ribbon-50);
+  --status-to-apply-text: var(--color-blue-ribbon-500);
+  --status-applied-bg: var(--color-zest-50);
+  --status-applied-text: var(--color-zest-300);
+  --status-followup-bg: var(--color-zest-100);
+  --status-followup-text: var(--color-zest-200);
+  --status-interview-bg: var(--color-chateau-green-50);
+  --status-interview-text: var(--color-chateau-green-300);
+  --status-offer-bg: var(--color-chateau-green-100);
+  --status-offer-text: var(--color-chateau-green-300);
+  --status-rejected-bg: var(--color-tall-poppy-50);
+  --status-rejected-text: var(--color-tall-poppy-400);
+  --status-archived-bg: var(--color-alabaster-100);
+  --status-archived-text: var(--color-alabaster-300);
+
+  /* Urgency */
+  --urgency-overdue: var(--color-tall-poppy-400);
+  --urgency-today: var(--color-zest-200);
+  --urgency-soon: var(--color-zest-300);
+  --urgency-ok: var(--color-chateau-green-300);
+
+  /* Red flags */
+  --redflag-high-bg: var(--color-tall-poppy-50);
+  --redflag-high-text: var(--color-tall-poppy-400);
+  --redflag-med-bg: var(--color-zest-50);
+  --redflag-med-text: var(--color-zest-300);
+  --redflag-low-bg: var(--color-blue-ribbon-50);
+  --redflag-low-text: var(--color-blue-ribbon-400);
 }
 
-@layer components {
-  /* ─── Status badges ─────────────────────────────────────── */
-  .status-to-apply  { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-to-apply-bg);   color: var(--status-to-apply-text); }
-  .status-applied   { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-applied-bg);    color: var(--status-applied-text); }
-  .status-followup  { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-followup-bg);   color: var(--status-followup-text); }
-  .status-interview { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-interview-bg);  color: var(--status-interview-text); }
-  .status-offer     { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-offer-bg);      color: var(--status-offer-text); }
-  .status-rejected  { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-rejected-bg);   color: var(--status-rejected-text); }
-  .status-archived  { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold; background: var(--status-archived-bg);   color: var(--status-archived-text); }
+.dark {
+  --color-background: var(--color-woodsmoke-700);
+  --color-foreground: #e0e0f0;
+  --color-card: #13131a;
+  --color-card-foreground: #e0e0f0;
+  --color-popover: #13131a;
+  --color-popover-foreground: #e0e0f0;
+  --color-secondary: #1a1a24;
+  --color-secondary-foreground: #e0e0f0;
+  --color-muted: #1a1a24;
+  --color-muted-foreground: var(--color-woodsmoke-200);
+  --color-accent: #1a1a24;
+  --color-accent-foreground: #e0e0f0;
+  --color-border: #2a2a38;
+  --color-input: #2a2a38;
 
-  /* ─── Red flags ─────────────────────────────────────────── */
-  .redflag-high { @apply inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold; background: var(--redflag-high-bg); color: var(--redflag-high-text); }
-  .redflag-med  { @apply inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold; background: var(--redflag-med-bg);  color: var(--redflag-med-text); }
-  .redflag-low  { @apply inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-semibold; background: var(--redflag-low-bg);  color: var(--redflag-low-text); }
-
-  /* ─── Urgency indicator ─────────────────────────────────── */
-  .urgency-dot {
-    @apply inline-block w-2 h-2 rounded-full flex-shrink-0;
-  }
-  .urgency-overdue { color: var(--urgency-overdue); }
-  .urgency-overdue .urgency-dot { background-color: var(--urgency-overdue); }
-  .urgency-today   { color: var(--urgency-today); }
-  .urgency-today   .urgency-dot { background-color: var(--urgency-today); }
-  .urgency-soon    { color: var(--urgency-soon); }
-  .urgency-soon    .urgency-dot { background-color: var(--urgency-soon); }
-  .urgency-ok      { color: var(--urgency-ok); }
-  .urgency-ok      .urgency-dot { background-color: var(--urgency-ok); }
-
-  /* ─── Score bar ─────────────────────────────────────────── */
-  .score-bar-track {
-    background-color: hsl(var(--border));
-    @apply h-1.5 w-full rounded-full overflow-hidden;
-  }
-  .score-bar-fill {
-    background-color: var(--hiro-accent);
-    @apply h-full rounded-full transition-all duration-500;
-  }
-  .score-bar-fill[data-score="low"]  { background-color: var(--urgency-overdue); }
-  .score-bar-fill[data-score="mid"]  { background-color: var(--urgency-soon); }
-  .score-bar-fill[data-score="high"] { background-color: var(--chateau-green-300); }
+  --status-to-apply-bg: #0d0f30;
+  --status-applied-bg: #1f1200;
+  --status-followup-bg: #2a1800;
+  --status-interview-bg: #011505;
+  --status-offer-bg: #01240b;
+  --status-rejected-bg: #270503;
+  --status-archived-bg: var(--color-woodsmoke-600);
 }
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Status badges */
+.status-to-apply { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-to-apply-bg); color: var(--status-to-apply-text); }
+.status-applied { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-applied-bg); color: var(--status-applied-text); }
+.status-followup { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-followup-bg); color: var(--status-followup-text); }
+.status-interview { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-interview-bg); color: var(--status-interview-text); }
+.status-offer { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-offer-bg); color: var(--status-offer-text); }
+.status-rejected { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-rejected-bg); color: var(--status-rejected-text); }
+.status-archived { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background: var(--status-archived-bg); color: var(--status-archived-text); }
+
+/* Red flags */
+.redflag-high { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; background: var(--redflag-high-bg); color: var(--redflag-high-text); }
+.redflag-med { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; background: var(--redflag-med-bg); color: var(--redflag-med-text); }
+.redflag-low { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; background: var(--redflag-low-bg); color: var(--redflag-low-text); }
+
+/* Urgency */
+.urgency-dot { display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 9999px; flex-shrink: 0; }
+.urgency-overdue { color: var(--urgency-overdue); }
+.urgency-overdue .urgency-dot { background-color: var(--urgency-overdue); }
+.urgency-today { color: var(--urgency-today); }
+.urgency-today .urgency-dot { background-color: var(--urgency-today); }
+.urgency-soon { color: var(--urgency-soon); }
+.urgency-soon .urgency-dot { background-color: var(--urgency-soon); }
+.urgency-ok { color: var(--urgency-ok); }
+.urgency-ok .urgency-dot { background-color: var(--urgency-ok); }
