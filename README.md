@@ -74,6 +74,20 @@ hiro/
 - [ ] Candidatures spontanées (formulaire manuel)
 - [ ] Calcul automatique de la date de relance
 
+Tu peux lancer directement dans ton terminal :
+
+  npm run dev                                                                                                                                                                                              
+  Avant ça, assure-toi d'avoir un fichier .env à la racine du projet avec :                                                                                                                              
+                                                                                                                                                                                                         
+  DATABASE_URL="postgresql://user:password@host:5432/hiro"
+  ANTHROPIC_API_KEY="sk-ant-..."
+
+  Et si la DB n'est pas encore initialisée :
+
+  npx prisma db push
+
+  Ça créera les tables dans ta base PostgreSQL, puis npm run dev lancera le serveur sur http://localhost:3000.
+
 ## Fonctionnalités — Sprint 2 (P1)
 
 - [ ] Templates d'email de relance générés par Claude
